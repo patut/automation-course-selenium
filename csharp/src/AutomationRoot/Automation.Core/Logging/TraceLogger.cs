@@ -10,12 +10,12 @@ namespace Automation.Core.Logging
             Trace.TraceInformation(message);
         }
 
-        public void Format(string message, params object[] args)
+        public void Debug(string message, params object[] args)
         {
             Trace.TraceInformation(string.Format(message, args));
         }
 
-        public void Exception(Exception exception, string message)
+        public void Debug(Exception exception, string message)
         {
             Trace.TraceError($"{message} {exception}");
         }

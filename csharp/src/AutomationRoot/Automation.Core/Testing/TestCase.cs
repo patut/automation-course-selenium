@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Automation.Core.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Automation.Core.Testing
 {
@@ -22,7 +24,32 @@ namespace Automation.Core.Testing
 
         public TestCase Execute()
         {
-            Actual = AutomationTest(_testParams);
+            for (int i = 0; i < _attempts; i++)
+            {
+                try
+                {
+                    Actual = AutomationTest(_testParams);
+                    if (Actual)
+                    {
+                        break;
+                    }
+                    _logger.Debug($"[{GetType()?.FullName}] failed on attempt [{i + 1}]");
+                }
+                catch (AssertInconclusiveException e)
+                {
+                    _logger.Debug(e, e.Message);
+                    break;
+                }
+                catch (NotImplementedException e)
+                {
+                    _logger.Debug(e,e.Message);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    _logger.Debug(e, e.Message);
+                }
+            }
             return this;
         }
 
