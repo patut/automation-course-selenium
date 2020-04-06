@@ -6,9 +6,6 @@ namespace Automation.Core.Components
 {
     public abstract class FluentUi : IFluent
     {
-        private readonly IWebDriver _driver;
-        private readonly ILogger _logger;
-
         protected FluentUi(IWebDriver driver) 
             : this(driver, new TraceLogger())
         {
@@ -16,14 +13,18 @@ namespace Automation.Core.Components
         
         protected FluentUi(IWebDriver driver, ILogger logger)
         {
-            _driver = driver;
-            _logger = logger;
+            Driver = driver;
+            Logger = logger;
         }
+
+        public IWebDriver Driver { get; }
         
+        public ILogger Logger { get; }
+
         public T ChangeContext<T>()
         {
             var instance = Create<T>(null);
-            _logger.Debug($"Instance of [{GetType()?.FullName}] created");
+            Logger.Debug($"Instance of [{GetType()?.FullName}] created");
             return instance;
         }
         
@@ -34,21 +35,21 @@ namespace Automation.Core.Components
         
         public T ChangeContext<T>(string application, ILogger logger)
         {
-            _driver.Navigate().GoToUrl(application);
-            _driver.Manage().Window.Maximize();
+            Driver.Navigate().GoToUrl(application);
+            Driver.Manage().Window.Maximize();
             return Create<T>(logger); 
         }
 
         public T ChangeContext<T>(string application)
         {
-            return ChangeContext<T>(application, _logger);
+            return ChangeContext<T>(application, Logger);
         }
 
         private T Create<T>(ILogger logger)
         {
             return logger == null
-                ? (T) Activator.CreateInstance(typeof(T), _driver)
-                : (T) Activator.CreateInstance(typeof(T), _driver, logger);
+                ? (T) Activator.CreateInstance(typeof(T), Driver)
+                : (T) Activator.CreateInstance(typeof(T), Driver, logger);
         }
     }
 }
