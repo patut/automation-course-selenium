@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net47;net471;net472;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2.0.0</Version>
   </PropertyGroup>
@@ -11,7 +11,22 @@
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="**\**" />
+    <Compile Include="Components\WebDriverExtensions.cs" />
+    <Compile Include="Components\WebDriverFactory.cs" />
+    <Compile Include="Contracts\DriverParams.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="**\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="**\**" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="Pack">
-    <Exec Command="nuget init &quot;$(ProjectDir)bin\$(Configuration)&quot; &quot;D:\nuget-artifactory\packages&quot;" />
+    <Exec Command="nuget init &quot;$(ProjectDir)bin\$(Configuration)&quot; &quot;nuget-artifactory\packages&quot;" />
   </Target>
 </Project>
