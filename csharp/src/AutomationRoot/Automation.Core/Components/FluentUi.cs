@@ -1,3 +1,4 @@
+using System;
 using Automation.Core.Logging;
 using OpenQA.Selenium;
 
@@ -21,12 +22,33 @@ namespace Automation.Core.Components
         
         public T ChangeContext<T>()
         {
-            throw new System.NotImplementedException();
+            var instance = Create<T>(null);
+            _logger.Debug($"Instance of [{GetType()?.FullName}] created");
+            return instance;
+        }
+        
+        public T ChangeContext<T>(ILogger logger)
+        {
+            return Create<T>(logger);
+        }
+        
+        public T ChangeContext<T>(string application, ILogger logger)
+        {
+            _driver.Navigate().GoToUrl(application);
+            _driver.Manage().Window.Maximize();
+            return Create<T>(logger); 
         }
 
         public T ChangeContext<T>(string application)
         {
-            throw new System.NotImplementedException();
+            return ChangeContext<T>(application, _logger);
+        }
+
+        private T Create<T>(ILogger logger)
+        {
+            return logger == null
+                ? (T) Activator.CreateInstance(typeof(T), _driver)
+                : (T) Activator.CreateInstance(typeof(T), _driver, logger);
         }
     }
 }
