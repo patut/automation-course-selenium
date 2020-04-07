@@ -8,12 +8,15 @@ namespace Automation.Framework.Ui.Components
 {
     public class StudentUi : FluentUi, IStudent
     {
-        public StudentUi(IWebDriver driver) 
+        private readonly IWebElement _dataRow;
+        
+        public StudentUi(IWebDriver driver, IWebElement dataRow) 
             : this(driver, new TraceLogger())
         {
+            _dataRow = dataRow;
         }
 
-        public StudentUi(IWebDriver driver, ILogger logger) 
+        private StudentUi(IWebDriver driver, ILogger logger) 
             : base(driver, logger)
         {
         }
