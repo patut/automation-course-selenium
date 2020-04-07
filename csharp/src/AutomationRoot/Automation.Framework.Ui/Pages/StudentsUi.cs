@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Automation.Api.Components;
 using Automation.Api.Pages;
 using Automation.Core.Components;
@@ -61,7 +62,8 @@ namespace Automation.Framework.Ui.Pages
 
         public IEnumerable<IStudent> Students()
         {
-            return new StudentUi[0];
+            var students = Driver.GetElements(By.XPath("//tbody/tr"));
+            return students.Select(s => new StudentUi(Driver, s));
         }
     }
 }
