@@ -24,5 +24,21 @@ namespace Automation.Testing.Containers
             // assert result
             Assert.IsTrue(actual);
         }
+        
+        [DataTestMethod]
+        [DataRow(@"{'driver': 'chrome', 'firstname':'csharp', 'lastname':'student', 'application':'https://gravitymvctestapplication.azurewebsites.net/Student'}")]
+        public void CreateStudentTest(string testParams)
+        {
+            // generate test params
+            var parameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(testParams);
+            
+            // execute with parameters
+            var actual = new CreateStudent()
+                .WithTestParams(parameters)
+                .Execute().Actual;
+            
+            // assert result
+            Assert.IsTrue(actual);
+        }
     }
 }

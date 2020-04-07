@@ -10,17 +10,18 @@ namespace Automation.Testing.Cases
     {
         public override bool AutomationTest(IDictionary<string, object> testParams)
         {
-            var keyword = testParams["keyword"].ToString();
+            var firstname = testParams["firstname"].ToString();
+            var lastname = testParams["lastname"].ToString();
             
             // perform Test Case
             return new StudentsUi(Driver)
                 .ChangeContext<StudentsUi>(testParams["application"].ToString())
                 .Create()
-                .FirstName("csharp")
-                .LastName("student")
+                .FirstName(firstname)
+                .LastName(lastname)
                 .EnrollmentDate(DateTime.Now)
                 .Create()
-                .FindByName("csharp")
+                .FindByName(firstname)
                 .Students()
                 .Any();
         }
