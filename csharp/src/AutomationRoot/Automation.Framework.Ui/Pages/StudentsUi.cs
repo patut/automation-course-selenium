@@ -4,6 +4,7 @@ using Automation.Api.Pages;
 using Automation.Core.Components;
 using Automation.Core.Logging;
 using Automation.Extensions.Components;
+using Automation.Framework.Ui.Components;
 using OpenQA.Selenium;
 
 namespace Automation.Framework.Ui.Pages
@@ -60,7 +61,7 @@ namespace Automation.Framework.Ui.Pages
 
         public IEnumerable<IStudent> Students()
         {
-            throw new System.NotImplementedException();
+            return new StudentUi[0];
         }
     }
 }
