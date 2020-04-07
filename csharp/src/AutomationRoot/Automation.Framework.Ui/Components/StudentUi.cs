@@ -9,11 +9,15 @@ namespace Automation.Framework.Ui.Components
     public class StudentUi : FluentUi, IStudent
     {
         private readonly IWebElement _dataRow;
+        private string _firstName;
+        private string _lastName;
+        private DateTime _entollmentDate;
         
         public StudentUi(IWebDriver driver, IWebElement dataRow) 
             : this(driver, new TraceLogger())
         {
             _dataRow = dataRow;
+            Build(dataRow);
         }
 
         private StudentUi(IWebDriver driver, ILogger logger) 
@@ -24,17 +28,17 @@ namespace Automation.Framework.Ui.Components
         // Data
         public string FirstName()
         {
-            throw new NotImplementedException();
+            return _firstName;
         }
 
         public string LastName()
         {
-            throw new NotImplementedException();
+            return _lastName;
         }
 
         public DateTime EnrollmentDate()
         {
-            throw new NotImplementedException();
+            return _entollmentDate;
         }
         
         // Actions
@@ -52,6 +56,17 @@ namespace Automation.Framework.Ui.Components
         public object Delete()
         {
             throw new NotImplementedException();
+        }
+        
+        // processing
+        private void Build(IWebElement dataRow)
+        {
+            _firstName = dataRow.FindElement(By.XPath("./td[2]")).Text.Trim();
+            _lastName = dataRow.FindElement(By.XPath("./td[1]")).Text.Trim();
+            
+            // parse date
+            var dateString = dataRow.FindElement(By.XPath("./td[3]")).Text.Trim();
+            DateTime.TryParse(dateString, out _entollmentDate);
         }
     }
 }
