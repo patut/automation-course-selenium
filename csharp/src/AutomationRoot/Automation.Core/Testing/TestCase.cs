@@ -29,6 +29,7 @@ namespace Automation.Core.Testing
         {
             for (int i = 0; i < _attempts; i++)
             {
+                Driver = Get();
                 try
                 {
                     Actual = AutomationTest(_testParams);
@@ -36,6 +37,7 @@ namespace Automation.Core.Testing
                     {
                         break;
                     }
+
                     _logger.Debug($"[{GetType()?.FullName}] failed on attempt [{i + 1}]");
                 }
                 catch (AssertInconclusiveException e)
@@ -45,12 +47,17 @@ namespace Automation.Core.Testing
                 }
                 catch (NotImplementedException e)
                 {
-                    _logger.Debug(e,e.Message);
+                    _logger.Debug(e, e.Message);
                     break;
                 }
                 catch (Exception e)
                 {
                     _logger.Debug(e, e.Message);
+                }
+                finally
+                {
+                    Driver.Dispose();
+                    Driver.Close();
                 }
             }
             return this;
