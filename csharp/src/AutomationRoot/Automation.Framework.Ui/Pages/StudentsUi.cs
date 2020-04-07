@@ -3,6 +3,7 @@ using Automation.Api.Components;
 using Automation.Api.Pages;
 using Automation.Core.Components;
 using Automation.Core.Logging;
+using Automation.Extensions.Components;
 using OpenQA.Selenium;
 
 namespace Automation.Framework.Ui.Pages
@@ -51,7 +52,10 @@ namespace Automation.Framework.Ui.Pages
 
         public IStudents FindByName(string name)
         {
-            throw new System.NotImplementedException();
+            Driver.GetEnabledElement(By.XPath("//input[@id='SearchString']"))
+                .SendKeys(name);
+            Driver.SubmitForm(0);
+            return this;
         }
 
         public IEnumerable<IStudent> Students()

@@ -57,7 +57,7 @@ namespace Automation.Core.Testing
                 finally
                 {
                     Driver.Dispose();
-                    Driver.Close();
+                    //Driver.Close();
                 }
             }
             return this;
