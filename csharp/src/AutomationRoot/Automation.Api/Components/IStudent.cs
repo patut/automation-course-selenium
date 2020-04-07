@@ -1,19 +1,6 @@
-using System;
-
 namespace Automation.Api.Components
 {
-    public interface IStudent
+    public interface IStudent : IStudentDetails, IEntityActions
     {
-        string FirstName();
-        
-        string LastName();
-        
-        DateTime EnrollmentDate();
-        
-        object Edit();
-        
-        object Details();
-        
-        object Delete();
     }
 }
