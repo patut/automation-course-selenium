@@ -1,20 +1,12 @@
-﻿using Automation.Extensions.Components;
+﻿using System.Drawing;
+using System.Threading;
+using Automation.Extensions.Components;
 using Automation.Extensions.Contracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Automation.Testing
+namespace Automation.Testing.Containers
 {
     [TestClass]
     public class SeleniumSamples
