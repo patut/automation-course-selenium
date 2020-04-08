@@ -1,5 +1,6 @@
 using System;
 using Automation.Api.Components;
+using Automation.Api.Pages;
 using Automation.Core.Components;
 using Automation.Core.Logging;
 using OpenQA.Selenium;
@@ -48,7 +49,7 @@ namespace Automation.Framework.Ui.Components
             throw new NotImplementedException();
         }
 
-        public object Details()
+        public IStudentDetails Details()
         {
             throw new NotImplementedException();
         }
