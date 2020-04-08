@@ -44,7 +44,7 @@ namespace Automation.Framework.Ui.Pages
 
         public ICreateStudent FirstName(string firstName)
         {
-            Driver.GetEnabledElement(By.XPath("//input[@id='FirstName']")).SendKeys(firstName);
+            Driver.GetEnabledElement(By.XPath("//input[@id='FirstMidName']")).SendKeys(firstName);
             return this;
         }
 
@@ -56,7 +56,10 @@ namespace Automation.Framework.Ui.Pages
 
         public ICreateStudent EnrollmentDate(DateTime enrollmentDate)
         {
-            throw new NotImplementedException();
+            var script =
+                $"document.getElementById('EnrollmentDate').setAttribute('value', '{enrollmentDate:yyyy-MM-dd}');";
+            ((IJavaScriptExecutor) Driver).ExecuteScript(script);
+            return this;
         }
     }
 }
