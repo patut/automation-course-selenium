@@ -17,13 +17,13 @@ namespace Automation.Testing.Cases
                 .ChangeContext<StudentsUi>(testParams["application"].ToString())
                 .FindByName(keyword)
                 .Students()
-                .First()
+                .First();
             
             // extract expected result
             var expected = student.FirstName();
             
             // assert
-            return student.Details().FirstName().Equals(expected, StringComparison.OrdinalIgnoreCase)
+            return student.Details().FirstName().Equals(expected, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
