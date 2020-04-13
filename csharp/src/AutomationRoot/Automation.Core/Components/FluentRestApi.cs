@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using Automation.Core.Logging;
 
@@ -9,27 +10,31 @@ namespace Automation.Core.Components
             : this(httpClient, new TraceLogger())
         {
         }
-        
+
         public FluentRestApi(HttpClient httpClient, ILogger logger)
-                : base(logger)
+            : base(logger)
         {
-            HttpClient = httpClient;
+            HttpClient = httpClient ?? new HttpClient();
+        }
 
         public HttpClient HttpClient { get; }
         
         public override T ChangeContext<T>(string application)
         {
-            throw new System.NotImplementedException();
+            return ChangeContext<T>(application, null);
         }
 
         public override T ChangeContext<T>(string application, ILogger logger)
         {
-            throw new System.NotImplementedException();
+            HttpClient.BaseAddress = new Uri(application);
+            return Create<T>(logger);
         }
 
         internal override T Create<T>(ILogger logger)
         {
-            throw new System.NotImplementedException();
+            return logger == null
+                ? (T) Activator.CreateInstance(typeof(T), HttpClient)
+                : (T) Activator.CreateInstance(typeof(T), HttpClient, logger);
         }
     }
 }
