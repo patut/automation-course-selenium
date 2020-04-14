@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Automation.Core.Logging;
 using Automation.Extensions.Components;
 using Automation.Extensions.Contracts;
@@ -29,7 +30,7 @@ namespace Automation.Core.Testing
         {
             for (int i = 0; i < _attempts; i++)
             {
-                Driver = Get();
+                SetUp();
                 try
                 {
                     Actual = AutomationTest(_testParams);
@@ -67,6 +68,8 @@ namespace Automation.Core.Testing
         public bool Actual { get; private set; }
 
         public IWebDriver Driver { get; private set; }
+        
+        public HttpClient HttpClient { get; private set; }
 
         // configuration
         public TestCase WithTestParams(IDictionary<string, object> testParams)
@@ -88,7 +91,7 @@ namespace Automation.Core.Testing
         }
         
         //setup
-        private IWebDriver Get()
+        private void SetUp()
         {
             // constants
             const string driver = "driver";
@@ -101,9 +104,19 @@ namespace Automation.Core.Testing
             {
                 driverParams.Driver = $"{_testParams[driver]}";
             }
+            else
+            {
+                _testParams[driver] = string.Empty;
+            }
+            
+            if ($"{_testParams[driver]}".Equals("HTTP", StringComparison.OrdinalIgnoreCase))
+            {
+                HttpClient = new HttpClient();
+                return;
+            }
 
             // create web driver
-            return new WebDriverFactory(driverParams).Get();
+            Driver = new WebDriverFactory(driverParams).Get();
         }
     }
 }
