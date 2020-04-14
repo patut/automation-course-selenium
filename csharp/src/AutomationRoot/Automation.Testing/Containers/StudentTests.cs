@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
+using Automation.Framework.RestApi.Pages;
 using Automation.Testing.Cases;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -56,6 +58,12 @@ namespace Automation.Testing.Containers
             
             // assert result
             Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void TempTest()
+        {
+            var studentsTest = new StudentsRest(new HttpClient());
         }
     }
 }
