@@ -46,7 +46,10 @@ namespace Automation.Core.Components
 
         public override T ChangeContext<T>(string type, string application)
         {
-            throw new NotImplementedException();
+            var t = GetTypeByName(type);
+            Driver.Navigate().GoToUrl(application);
+            Driver.Manage().Window.Maximize();
+            return Create<T>(t, null);
         }
 
         public override T ChangeContext<T>(string application)
