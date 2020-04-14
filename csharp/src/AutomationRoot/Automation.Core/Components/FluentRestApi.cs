@@ -21,20 +21,30 @@ namespace Automation.Core.Components
         
         public override T ChangeContext<T>(string application)
         {
-            return ChangeContext<T>(application, null);
+            return ChangeContext<T>(application, (ILogger) null);
         }
 
         public override T ChangeContext<T>(string application, ILogger logger)
         {
             HttpClient.BaseAddress = new Uri(application);
-            return Create<T>(logger);
+            return Create<T>(null, logger);
         }
 
-        internal override T Create<T>(ILogger logger)
+        public override T ChangeContext<T>(string type, string application)
         {
+            throw new NotImplementedException();
+        }
+
+        internal override T Create<T>(Type type, ILogger logger)
+        {
+            if (type == null)
+            {
+                type = typeof(T);
+            }
+            
             return logger == null
-                ? (T) Activator.CreateInstance(typeof(T), HttpClient)
-                : (T) Activator.CreateInstance(typeof(T), HttpClient, logger);
+                ? (T) Activator.CreateInstance(type, HttpClient)
+                : (T) Activator.CreateInstance(type, HttpClient, logger);
         }
     }
 }

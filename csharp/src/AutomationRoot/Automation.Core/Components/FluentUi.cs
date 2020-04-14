@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 
 namespace Automation.Core.Components
 {
-    public abstract class FluentUi : FluentBase
+    public class FluentUi : FluentBase
     {
         public FluentUi(string driverParams)
             : this(new WebDriverFactory(driverParams).Get())
@@ -40,7 +40,12 @@ namespace Automation.Core.Components
         {
             Driver.Navigate().GoToUrl(application);
             Driver.Manage().Window.Maximize();
-            return Create<T>(logger);
+            return Create<T>(null, logger);
+        }
+
+        public override T ChangeContext<T>(string type, string application)
+        {
+            throw new NotImplementedException();
         }
 
         public override T ChangeContext<T>(string application)
@@ -48,11 +53,16 @@ namespace Automation.Core.Components
             return ChangeContext<T>(application, Logger);
         }
 
-        internal override T Create<T>(ILogger logger)
+        internal override T Create<T>(Type type, ILogger logger)
         {
+            if (type == null)
+            {
+                type = typeof(T);
+            }
+            
             return logger == null
-                ? (T) Activator.CreateInstance(typeof(T), Driver)
-                : (T) Activator.CreateInstance(typeof(T), Driver, logger);
+                ? (T) Activator.CreateInstance(type, Driver)
+                : (T) Activator.CreateInstance(type, Driver, logger);
         }
     }
 }
