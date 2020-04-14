@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using Automation.Core.Logging;
 using Automation.Extensions.Components;
 using Automation.Extensions.Contracts;

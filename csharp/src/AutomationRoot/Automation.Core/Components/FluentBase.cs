@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Automation.Core.Logging;
 
 namespace Automation.Core.Components
@@ -31,5 +34,18 @@ namespace Automation.Core.Components
         public abstract T ChangeContext<T>(string type, string application);
 
         internal abstract T Create<T>(Type type, ILogger logger);
+
+        internal Type GetTypeByName(string type)
+        {
+            var assemblies = Assembly.GetCallingAssembly()
+                .GetReferencedAssemblies()
+                .Select(assembly => 
+                    Assembly.Load(assembly))
+                .ToList();
+
+            return assemblies.SelectMany(i => i.GetTypes())
+                .FirstOrDefault(a => 
+                    a.FullName.Equals(type, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }
