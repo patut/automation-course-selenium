@@ -1,17 +1,34 @@
 using System;
 using Automation.Core.Logging;
+using Automation.Extensions.Components;
+using Automation.Extensions.Contracts;
 using OpenQA.Selenium;
 
 namespace Automation.Core.Components
 {
     public abstract class FluentUi : FluentBase
     {
-        protected FluentUi(IWebDriver driver) 
-            : this(driver, new TraceLogger())
+        public FluentUi(string driverParams)
+            : this(new WebDriverFactory(driverParams).Get())
+        {
+        }
+
+        public FluentUi(DriverParams driverParams)
+            : this(new WebDriverFactory(driverParams).Get())
         {
         }
         
-        protected FluentUi(IWebDriver driver, ILogger logger) 
+        public FluentUi(WebDriverFactory factory)
+            : this(factory.Get())
+        {
+        }
+
+        protected FluentUi(IWebDriver driver)
+            : this(driver, new TraceLogger())
+        {
+        }
+
+        protected FluentUi(IWebDriver driver, ILogger logger)
             : base(logger)
         {
             Driver = driver;
@@ -23,7 +40,7 @@ namespace Automation.Core.Components
         {
             Driver.Navigate().GoToUrl(application);
             Driver.Manage().Window.Maximize();
-            return Create<T>(logger); 
+            return Create<T>(logger);
         }
 
         public override T ChangeContext<T>(string application)
