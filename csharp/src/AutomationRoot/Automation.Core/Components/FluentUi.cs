@@ -24,12 +24,12 @@ namespace Automation.Core.Components
         {
         }
 
-        protected FluentUi(IWebDriver driver)
+        public FluentUi(IWebDriver driver)
             : this(driver, new TraceLogger())
         {
         }
 
-        protected FluentUi(IWebDriver driver, ILogger logger)
+        public FluentUi(IWebDriver driver, ILogger logger)
             : base(logger)
         {
             Driver = driver;

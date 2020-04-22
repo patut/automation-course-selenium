@@ -8,7 +8,9 @@ namespace Automation.Core.Components
     {
         public static Type GetTypeByName(string type)
         {
-            var assemblies = Assembly.GetCallingAssembly()
+            const string ASSEMBLY = "Automation.Testing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                
+            var assemblies = Assembly.Load(ASSEMBLY)
                 .GetReferencedAssemblies()
                 .Select(assembly => 
                     Assembly.Load(assembly))
