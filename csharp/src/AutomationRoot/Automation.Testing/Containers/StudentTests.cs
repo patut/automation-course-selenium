@@ -63,7 +63,7 @@ namespace Automation.Testing.Containers
         [TestMethod]
         public void TempTest()
         {
-            var studentsTest = new StudentsRest(new HttpClient());
+            var studentsTest = new StudentsRest(new HttpClient()).Students();
         }
     }
 }
