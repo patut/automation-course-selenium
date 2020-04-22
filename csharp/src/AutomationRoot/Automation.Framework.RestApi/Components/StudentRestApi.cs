@@ -4,13 +4,22 @@ using Automation.Api.Components;
 using Automation.Api.Pages;
 using Automation.Core.Components;
 using Automation.Core.Logging;
+using Newtonsoft.Json.Linq;
+using OpenQA.Selenium;
 
 namespace Automation.Framework.RestApi.Components
 {
     public class StudentRestApi : FluentRestApi, IStudent
     {
-        public StudentRestApi(HttpClient httpClient) : base(httpClient)
+        private readonly JToken _dataRow;
+        private string _firstName;
+        private string _lastName;
+        private DateTime _entollmentDate;
+        
+        public StudentRestApi(HttpClient httpClient, JToken dataRow) : this(httpClient, new TraceLogger())
         {
+            _dataRow = dataRow;
+            Build(dataRow);
         }
 
         public StudentRestApi(HttpClient httpClient, ILogger logger) : base(httpClient, logger)
@@ -19,17 +28,17 @@ namespace Automation.Framework.RestApi.Components
 
         public string FirstName()
         {
-            throw new NotImplementedException();
+            return _firstName;
         }
 
         public string LastName()
         {
-            throw new NotImplementedException();
+            return _lastName;
         }
 
         public DateTime EnrollmentDate()
         {
-            throw new NotImplementedException();
+            return _entollmentDate;
         }
 
         public IStudentDetails Details()
@@ -45,6 +54,10 @@ namespace Automation.Framework.RestApi.Components
         public object Edit()
         {
             throw new NotImplementedException();
+        }
+        
+        private void Build(JToken dataRow)
+        {
         }
     }
 }
