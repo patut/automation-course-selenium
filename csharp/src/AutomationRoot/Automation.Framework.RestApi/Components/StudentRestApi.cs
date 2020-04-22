@@ -9,12 +9,12 @@ using OpenQA.Selenium;
 
 namespace Automation.Framework.RestApi.Components
 {
-    public class StudentRestApi : FluentRestApi, IStudent
+    public class StudentRestApi : FluentRest, IStudent
     {
         private readonly JToken _dataRow;
         private string _firstName;
         private string _lastName;
-        private DateTime _entollmentDate;
+        private DateTime _enrollmentDate;
         
         public StudentRestApi(HttpClient httpClient, JToken dataRow) : this(httpClient, new TraceLogger())
         {
@@ -38,7 +38,7 @@ namespace Automation.Framework.RestApi.Components
 
         public DateTime EnrollmentDate()
         {
-            return _entollmentDate;
+            return _enrollmentDate;
         }
 
         public IStudentDetails Details()
@@ -60,7 +60,7 @@ namespace Automation.Framework.RestApi.Components
         {
             _firstName = dataRow["firstMidName"].ToString();
             _lastName = dataRow["lastName"].ToString();
-            _entollmentDate = DateTime.Parse(dataRow["enrollmentDate"].ToString());
+            _enrollmentDate = DateTime.Parse(dataRow["enrollmentDate"].ToString());
         }
     }
 }

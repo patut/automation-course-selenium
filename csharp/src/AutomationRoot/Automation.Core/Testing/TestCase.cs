@@ -60,7 +60,8 @@ namespace Automation.Core.Testing
                 }
                 finally
                 {
-                    Driver.Dispose();
+                    Driver?.Dispose();
+                    HttpClient?.Dispose();
                     //Driver.Close();
                 }
             }
