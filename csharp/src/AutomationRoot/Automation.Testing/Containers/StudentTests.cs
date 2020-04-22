@@ -13,13 +13,13 @@ namespace Automation.Testing.Containers
     public class StudentTests
     {
         [DataTestMethod]
-        [DataRow(@"{
-                    'driver': 'chrome', 
-                    'keyword':'Alexander', 
-                    'application':'https://gravitymvctestapplication.azurewebsites.net/Student',
-                    'fluent':'Automation.Core.Components.FluentUi',
-                    'students':'Automation.Framework.Ui.Pages.StudentsUi'
-                    }")]
+//        [DataRow(@"{
+//                    'driver': 'chrome', 
+//                    'keyword':'Alexander', 
+//                    'application':'https://gravitymvctestapplication.azurewebsites.net/Student',
+//                    'fluent':'Automation.Core.Components.FluentUi',
+//                    'students':'Automation.Framework.Ui.Pages.StudentsUi'
+//                    }")]
         [DataRow(@"{
                     'driver': 'HTTP', 
                     'keyword':'Alexander', 
@@ -72,15 +72,6 @@ namespace Automation.Testing.Containers
             
             // assert result
             Assert.IsTrue(actual);
-        }
-
-        [TestMethod]
-        public void TempTest()
-        {
-            var studentsTest = new FluentRest(new HttpClient())
-                .ChangeContext<StudentsRest>("https://gravitymvctestapplication.azurewebsites.net")
-                .Students();
-            
         }
     }
 }
