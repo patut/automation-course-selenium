@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -12,6 +14,8 @@ namespace Automation.Framework.RestApi.Pages
 {
     public class StudentsRest : FluentRest, IStudents
     {
+        private readonly IEnumerable<IStudent> _students;
+        
         public StudentsRest(HttpClient httpClient) 
             : this(httpClient, new TraceLogger())
         {
@@ -59,6 +63,11 @@ namespace Automation.Framework.RestApi.Pages
 
         public IEnumerable<IStudent> Students()
         {
+            return _students;
+        }
+
+        private IEnumerable<IStudent> Build(string name)
+        {
             var response = HttpClient.GetAsync("/api/Students/")
                 .GetAwaiter().GetResult();
             if (!response.IsSuccessStatusCode)
@@ -67,7 +76,14 @@ namespace Automation.Framework.RestApi.Pages
             }
 
             var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            return JToken.Parse(responseBody).Select(i => new StudentRestApi(HttpClient, i));
+            var students = JToken.Parse(responseBody).Select(i => new StudentRestApi(HttpClient, i));
+            
+            // filter results
+            var comparison = StringComparison.OrdinalIgnoreCase; 
+            return string.IsNullOrEmpty(name)
+                ? students
+                : students.Where(s => 
+                    s.FirstName().Equals(name, comparison) || s.LastName().Equals(name, comparison));
         }
     }
     
