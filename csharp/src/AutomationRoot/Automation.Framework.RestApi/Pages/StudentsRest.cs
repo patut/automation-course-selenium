@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -14,7 +13,7 @@ namespace Automation.Framework.RestApi.Pages
 {
     public class StudentsRest : FluentRest, IStudents
     {
-        private readonly IEnumerable<IStudent> _students;
+        private readonly IEnumerable<IStudent> _studentList;
         
         public StudentsRest(HttpClient httpClient) 
             : this(httpClient, new TraceLogger())
@@ -22,48 +21,54 @@ namespace Automation.Framework.RestApi.Pages
         }
 
         public StudentsRest(HttpClient httpClient, ILogger logger) 
+            : this(httpClient, logger, string.Empty)
+        {
+        }
+
+        private StudentsRest(HttpClient httpClient, ILogger logger, string name)
             : base(httpClient, logger)
         {
+            _studentList = Build(name);
         }
 
         public IStudents Next()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public IStudents Previous()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public int Pages()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public int Page()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public T Menu<T>(string menuName)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ICreateStudent Create()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public IStudents FindByName(string name)
         {
-            throw new System.NotImplementedException();
+            return new StudentsRest(HttpClient, Logger, name);
         }
 
         public IEnumerable<IStudent> Students()
         {
-            return _students;
+            return _studentList;
         }
 
         private IEnumerable<IStudent> Build(string name)

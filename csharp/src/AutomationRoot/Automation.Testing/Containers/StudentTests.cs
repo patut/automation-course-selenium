@@ -13,13 +13,13 @@ namespace Automation.Testing.Containers
     public class StudentTests
     {
         [DataTestMethod]
-//        [DataRow(@"{
-//                    'driver': 'chrome', 
-//                    'keyword':'Alexander', 
-//                    'application':'https://gravitymvctestapplication.azurewebsites.net/Student',
-//                    'fluent':'Automation.Core.Components.FluentUi',
-//                    'students':'Automation.Framework.Ui.Pages.StudentsUi'
-//                    }")]
+        [DataRow(@"{
+                    'driver': 'chrome', 
+                    'keyword':'Alexander', 
+                    'application':'https://gravitymvctestapplication.azurewebsites.net/Student',
+                    'fluent':'Automation.Core.Components.FluentUi',
+                    'students':'Automation.Framework.Ui.Pages.StudentsUi'
+                    }")]
         [DataRow(@"{
                     'driver': 'HTTP', 
                     'keyword':'Alexander', 
